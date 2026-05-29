@@ -2,10 +2,10 @@
 
 class Profesional {
     const property tipoDeProfesional
+    const property universidad
 
-    method universidad() = tipoDeProfesional.universidad() 
-    method honorarios() = tipoDeProfesional.honorarios()
-    method provinciasQuePuedeTrabajar() = tipoDeProfesional.provinciasQuePuedeTrabajar()
+    method honorarios() = tipoDeProfesional.honorarios(self)
+    method provinciasQuePuedeTrabajar() = tipoDeProfesional.provinciasQuePuedeTrabajar(self)
 }
 
 // Universidad
@@ -17,22 +17,25 @@ class Universidad {
 
 // Tipos de Profesionales
 
-class ProfesionalUniversitario {
-    const property universidad
-    method provinciasQuePuedeTrabajar() = [universidad.provincia()]
-    method honorarios() = universidad.honorarios()
+object profesionalUniversitario {
+    
+    method provinciasQuePuedeTrabajar(profesional) = [profesional.universidad().provincia()]
+    method honorarios(profesional) = profesional.universidad().honorarios()
 }
 
-class ProfesionalLitoral {
-    const property universidad
-    method provinciasQuePuedeTrabajar() = [entreRios, santaFe, corrientes]
-    method honorarios() = 3000
+object profesionalLitoral {
+    
+    method provinciasQuePuedeTrabajar(profesional) = [entreRios, santaFe, corrientes]
+    method honorarios(profesional) = 3000
 }
 
 class ProfesionalLibre {
-    const property universidad 
+    
     const property provinciasQuePuedeTrabajar = []
     const property honorarios
+
+    method provinciasQuePuedeTrabajar(profesional) = provinciasQuePuedeTrabajar
+    method honorarios(profesional) = honorarios
 }
 
 // Empresa de Servicio
@@ -47,7 +50,7 @@ class Empresa {
     method universidadesDeProfesionales() = profesionales.map({p => p.universidad()}) 
     method profesionalMasBarato() = profesionales.min({p => p.honorarios()})
     method esDeGenteAcotada() = profesionales.all({p => p.provinciasQuePuedeTrabajar().size() <= 3 })
-    method cantidadDeUniversidadesPorProfesional() = profesionales.map({ p =>   p.provincia() })
+    method cantidadDeUniversidadesPorProfesional() = profesionales.map({ p => p.universidad().provincia() })
     method provinciasPorProfesional() = profesionales.size({ p => p.provinciasQuePuedeTrabajar() }) 
     method puedeSatisfacerA(solicitante) = solicitante.puedeSerAtendido(profesionales) 
 

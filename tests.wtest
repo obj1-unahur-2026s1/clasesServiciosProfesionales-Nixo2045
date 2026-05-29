@@ -12,10 +12,16 @@ describe "Tests etapa 1" {
 
   // Profesionales
 
-  const juana = new ProfesionalUniversitario ( universidad = unRosario )
-  const melina = new ProfesionalLitoral ( universidad = unCorrientes )
-  const rocio = new ProfesionalLibre(universidad = unahur, honorarios = 5000, provinciasQuePuedeTrabajar = [santaFe, cordoba, buenosAires] )
-  const luciana = new ProfesionalLibre ( universidad = unRosario, honorarios = 3200, provinciasQuePuedeTrabajar = [santaFe, entreRios] )
+  const juana = new Profesional ( tipoDeProfesional = profesionalUniversitario, universidad = unRosario )
+  const melina = new Profesional ( tipoDeProfesional = profesionalLitoral, universidad = unCorrientes )
+  const rocio = new Profesional(
+    tipoDeProfesional = new ProfesionalLibre(honorarios = 5000, provinciasQuePuedeTrabajar = [santaFe, cordoba, buenosAires]),
+    universidad = unahur
+    )
+  const luciana = new Profesional(
+    tipoDeProfesional = new ProfesionalLibre(honorarios = 3200, provinciasQuePuedeTrabajar = [santaFe, entreRios]),
+    universidad = unRosario
+  )
 
 // Empresa
 
@@ -43,8 +49,8 @@ describe "Tests etapa 1" {
   }
 
   test "La empresa ahora no es de gente acotada porque Luciana tiene dos nuevas provincias." {
-    luciana.provinciasQuePuedeTrabajar().add(corrientes)
-    luciana.provinciasQuePuedeTrabajar().add(misiones)
+    luciana.tipoDeProfesional().provinciasQuePuedeTrabajar().add(corrientes)
+    luciana.tipoDeProfesional().provinciasQuePuedeTrabajar().add(misiones)
 
     assert.notThat(empresa.esDeGenteAcotada())
   }
