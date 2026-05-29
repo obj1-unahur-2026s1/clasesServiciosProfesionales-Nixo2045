@@ -1,0 +1,66 @@
+import profesionales.*
+import solicitantes.*
+
+describe "Tests etapa 1" {
+
+  // Universidades
+
+  const unSanMartin = new Universidad( honorarios = 3500, provincia = buenosAires )
+  const unRosario = new Universidad( honorarios = 2800, provincia = santaFe )
+  const unCorrientes = new Universidad( honorarios = 4200, provincia = corrientes )
+  const unahur = new Universidad( honorarios = 8800, provincia = buenosAires )
+
+  // Profesionales
+
+  const juana = new ProfesionalUniversitario ( universidad = unRosario )
+  const melina = new ProfesionalLitoral ( universidad = unCorrientes )
+  const rocio = new ProfesionalLibre(universidad = unahur, honorarios = 5000, provinciasQuePuedeTrabajar = [santaFe, cordoba, buenosAires] )
+  const luciana = new ProfesionalLibre ( universidad = unRosario, honorarios = 3200, provinciasQuePuedeTrabajar = [santaFe, entreRios] )
+
+// Empresa
+
+  const empresa = new Empresa(
+    honorarioReferencia = 1000,
+    profesionales = [] 
+  )
+
+
+  method initialize() {
+    empresa.agregarProfesional(juana)
+    empresa.agregarProfesional(melina)
+    empresa.agregarProfesional(rocio)
+    empresa.agregarProfesional(luciana)
+    empresa.honorarioReferencia(3500)
+  }
+
+ 
+  test "1 profesional de la empresa unicamente estudio en la universidad UNAHUR." {
+    assert.equals(1, empresa.profesionalesQueEstudiaronEn(unahur))
+  }
+
+  test "La empresa es de gente acotada" {
+    assert.that(empresa.esDeGenteAcotada())
+  }
+
+  test "La empresa ahora no es de gente acotada porque Luciana tiene dos nuevas provincias." {
+    luciana.provinciasQuePuedeTrabajar().add(corrientes)
+    luciana.provinciasQuePuedeTrabajar().add(misiones)
+
+    assert.notThat(empresa.esDeGenteAcotada())
+  }
+
+  test "El profesional más barato de la empresa es Juana." {
+    assert.equals(juana, empresa.profesionalMasBarato())
+  }
+
+  test "El profesional más caro es Rocio" {
+    assert.equals([rocio], empresa.profesionalesCaros())
+  }
+  
+  test "Las universidades formadoras son la de Rosario, Corrientes y Hurlingham." {
+    assert.that(empresa.universidadesFormadoras().contains(unahur))
+    assert.that(empresa.universidadesFormadoras().contains(unRosario))
+    assert.that(empresa.universidadesFormadoras().contains(unCorrientes))
+  }
+
+}
