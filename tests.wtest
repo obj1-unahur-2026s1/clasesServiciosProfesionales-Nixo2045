@@ -12,15 +12,15 @@ describe "Tests etapa 1" {
 
   // Profesionales
 
-  const juana = new Profesional ( tipoDeProfesional = profesionalUniversitario, universidad = unRosario )
-  const melina = new Profesional ( tipoDeProfesional = profesionalLitoral, universidad = unCorrientes )
+  const juana = new Profesional ( tipoDeProfesional = profesionalUniversitario, universidad = unRosario, dinero = 500, horaDeTiempo = 10 )
+  const melina = new Profesional ( tipoDeProfesional = profesionalLitoral, universidad = unCorrientes, dinero = 1000, horaDeTiempo = 2 )
   const rocio = new Profesional(
     tipoDeProfesional = new ProfesionalLibre(honorarios = 5000, provinciasQuePuedeTrabajar = [santaFe, cordoba, buenosAires]),
-    universidad = unahur
+    universidad = unahur, dinero = 800, horaDeTiempo = 15
     )
   const luciana = new Profesional(
     tipoDeProfesional = new ProfesionalLibre(honorarios = 3200, provinciasQuePuedeTrabajar = [santaFe, entreRios]),
-    universidad = unRosario
+    universidad = unRosario, dinero = 300, horaDeTiempo = 5
   )
 
 // Empresa
